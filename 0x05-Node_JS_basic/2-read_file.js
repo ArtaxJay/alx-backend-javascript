@@ -16,7 +16,7 @@ function countStudents(path) {
     const students = lines.slice(1); // Skip the header
 
     for (const student of students) {
-      const [firstname, field] = student
+      const [firstname, lastname, age, field] = student
         .split(',')
         .map((val) => val.trim());
       if (firstname && field) {
