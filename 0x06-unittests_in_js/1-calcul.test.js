@@ -1,44 +1,41 @@
 const assert = require('assert');
-const calculateNumber = require('./1-calcul');
+const calculateNumber = require('./1-calcul.js');
 
-describe('calculateNumber', () => {
-  describe('SUM', () => {
-    it('should return 6 for inputs (1.4, 4.5)', () => {
+describe('calculateNumber', function () {
+  describe('SUM', function () {
+    it('should return the sum of two rounded numbers', function () {
       assert.strictEqual(calculateNumber('SUM', 1.4, 4.5), 6);
-    });
-
-    it('should return -3 for inputs (-1.4, -1.5)', () => {
-      assert.strictEqual(calculateNumber('SUM', -1.4, -1.5), -3);
+      assert.strictEqual(calculateNumber('SUM', 1.5, 3.7), 6);
+      assert.strictEqual(calculateNumber('SUM', 2, 3), 5);
     });
   });
 
-  describe('SUBTRACT', () => {
-    it('should return -4 for inputs (1.4, 4.5)', () => {
-      assert.strictEqual(calculateNumber('SUBTRACT', 1.4, 4.5), -4);
-    });
-
-    it('should return 2 for inputs (1.7, -0.8)', () => {
-      assert.strictEqual(calculateNumber('SUBTRACT', 1.7, -0.8), 2);
+  describe('SUBTRACT', function () {
+    it('should return the difference of two rounded numbers', function () {
+      assert.strictEqual(calculateNumber('SUBTRACT', 5.4, 1.2), 4);
+      assert.strictEqual(calculateNumber('SUBTRACT', 2.7, 3.4), -1);
+      assert.strictEqual(calculateNumber('SUBTRACT', 10, 4.5), 5);
     });
   });
 
-  describe('DIVIDE', () => {
-    it('should return 0.2 for inputs (1.4, 4.5)', () => {
-      assert.strictEqual(calculateNumber('DIVIDE', 1.4, 4.5), 0.2);
+  describe('DIVIDE', function () {
+    it('should return the division of two rounded numbers', function () {
+      assert.strictEqual(calculateNumber('DIVIDE', 8.4, 2.3), 4);
+      assert.strictEqual(calculateNumber('DIVIDE', 9.7, 2.1), 5);
     });
 
-    it('should return Error for inputs (1.4, 0)', () => {
+    it('should return "Error" if dividing by 0', function () {
       assert.strictEqual(calculateNumber('DIVIDE', 1.4, 0), 'Error');
-    });
-
-    it('should return -2 for inputs (-4.5, 2.3)', () => {
-      assert.strictEqual(calculateNumber('DIVIDE', -4.5, 2.3), -2);
+      assert.strictEqual(calculateNumber('DIVIDE', 7.7, 0.2), 'Error');
     });
   });
 
-  describe('Invalid type', () => {
-    it('should throw an error for invalid operation type', () => {
-      assert.throws(() => calculateNumber('INVALID', 1.4, 4.5), Error);
+  describe('Invalid type', function () {
+    it('should throw an error for invalid operation type', function () {
+      assert.throws(
+        () => calculateNumber('MULTIPLY', 2, 3),
+        /Invalid operation type/
+      );
     });
   });
 });
