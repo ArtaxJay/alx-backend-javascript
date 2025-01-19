@@ -1,3 +1,6 @@
+// 5-payment.test.js
+const chai = require('chai');
+const assert = chai.assert;
 const sendPaymentRequestToAPI = require('./5-payment');
 
 describe('Testing sendPaymentRequestToAPI function', () => {
@@ -5,27 +8,33 @@ describe('Testing sendPaymentRequestToAPI function', () => {
 
   // This hook runs before each test
   beforeEach(() => {
-    consoleSpy = jest.spyOn(console, 'log'); // Create a spy for console.log
+    // Spy on console.log
+    consoleSpy = sinon.spy(console, 'log');
   });
 
   // This hook runs after each test to restore the original behavior of console.log
   afterEach(() => {
-    consoleSpy.mockRestore(); // Remove the spy after each test
+    // Restore original console.log behavior
+    consoleSpy.restore();
   });
 
-  it('should call console.log once with the correct total for price 100 and quantity 20', () => {
+  it('should log "The total is: 120" when called with price 100 and quantity 20', () => {
     sendPaymentRequestToAPI(100, 20);
 
-    // Verify the output and that the spy was called once
-    expect(consoleSpy).toHaveBeenCalledWith('The total is: 120');
-    expect(consoleSpy).toHaveBeenCalledTimes(1); // Check that console.log was called once
+    // Check that the console was called with the correct total
+    assert(
+      consoleSpy.calledOnceWith('The total is: 120'),
+      'Console log should be called once with "The total is: 120"'
+    );
   });
 
-  it('should call console.log once with the correct total for price 10 and quantity 10', () => {
+  it('should log "The total is: 20" when called with price 10 and quantity 10', () => {
     sendPaymentRequestToAPI(10, 10);
 
-    // Verify the output and that the spy was called once
-    expect(consoleSpy).toHaveBeenCalledWith('The total is: 20');
-    expect(consoleSpy).toHaveBeenCalledTimes(1); // Check that console.log was called once
+    // Check that the console was called with the correct total
+    assert(
+      consoleSpy.calledOnceWith('The total is: 20'),
+      'Console log should be called once with "The total is: 20"'
+    );
   });
 });
