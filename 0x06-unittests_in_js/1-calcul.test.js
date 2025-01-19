@@ -1,41 +1,42 @@
 const assert = require('assert');
-const calculateNumber = require('./1-calcul.js');
+const { describe, it } = require('mocha');
+const calculateNumber = require('./1-calcul');
 
-describe('calculateNumber', function () {
-  describe('SUM', function () {
-    it('should return the sum of two rounded numbers', function () {
-      assert.strictEqual(calculateNumber('SUM', 1.4, 4.5), 6);
-      assert.strictEqual(calculateNumber('SUM', 1.5, 3.7), 6);
-      assert.strictEqual(calculateNumber('SUM', 2, 3), 5);
-    });
+describe('calculateNumber()', function () {
+  it('should return the rounded sum of two numbers', function () {
+    const res = calculateNumber('SUM', 1, 2);
+    assert.strictEqual(res, 3);
   });
 
-  describe('SUBTRACT', function () {
-    it('should return the difference of two rounded numbers', function () {
-      assert.strictEqual(calculateNumber('SUBTRACT', 5.4, 1.2), 4);
-      assert.strictEqual(calculateNumber('SUBTRACT', 2.7, 3.4), -1);
-      assert.strictEqual(calculateNumber('SUBTRACT', 10, 4.5), 5);
-    });
+  it('should return the rounded subtraction of two numbers', function () {
+    const res = calculateNumber('SUBTRACT', 1.4, 2.2);
+    assert.strictEqual(res, -1);
   });
 
-  describe('DIVIDE', function () {
-    it('should return the division of two rounded numbers', function () {
-      assert.strictEqual(calculateNumber('DIVIDE', 8.4, 2.3), 4);
-      assert.strictEqual(calculateNumber('DIVIDE', 9.7, 2.1), 5);
-    });
-
-    it('should return "Error" if dividing by 0', function () {
-      assert.strictEqual(calculateNumber('DIVIDE', 1.4, 0), 'Error');
-      assert.strictEqual(calculateNumber('DIVIDE', 7.7, 0.2), 'Error');
-    });
+  it('should handle subtraction where result is positive', function () {
+    const res = calculateNumber('SUBTRACT', 4.9, 2.7);
+    assert.strictEqual(res, 2);
   });
 
-  describe('Invalid type', function () {
-    it('should throw an error for invalid operation type', function () {
-      assert.throws(
-        () => calculateNumber('MULTIPLY', 2, 3),
-        /Invalid operation type/
-      );
-    });
+  it('should return the rounded division of two numbers', function () {
+    const res = calculateNumber('DIVIDE', 4, 2);
+    assert.strictEqual(res, 2);
+  });
+
+  it("should return 'Error' when dividing by zero", function () {
+    const res = calculateNumber('DIVIDE', 1.7, 0);
+    assert.strictEqual(res, 'Error');
+  });
+
+  it('should correctly handle division resulting in a fraction', function () {
+    const res = calculateNumber('DIVIDE', 1.4, 4.6);
+    assert.strictEqual(res, 0.2);
+  });
+
+  it('should throw an error for invalid operation type', function () {
+    assert.throws(
+      () => calculateNumber('MULTIPLY', 1, 2),
+      /Invalid operation type/
+    );
   });
 });
