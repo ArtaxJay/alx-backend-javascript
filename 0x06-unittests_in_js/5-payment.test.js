@@ -1,40 +1,33 @@
-// 5-payment.test.js
-const chai = require('chai');
-const assert = chai.assert;
-const sendPaymentRequestToAPI = require('./5-payment');
+const sinon = require('sinon');
+const { sendPaymentRequestToAPI } = require('./5-payment');
+const Utils = require('./5-payment').Utils;
 
-describe('Testing sendPaymentRequestToAPI function', () => {
+describe('sendPaymentRequestToAPI', () => {
   let consoleSpy;
 
-  // This hook runs before each test
   beforeEach(() => {
-    // Spy on console.log
+    // Set up a spy for console.log
     consoleSpy = sinon.spy(console, 'log');
   });
 
-  // This hook runs after each test to restore the original behavior of console.log
   afterEach(() => {
-    // Restore original console.log behavior
+    // Restore the original console.log function
     consoleSpy.restore();
   });
 
-  it('should log "The total is: 120" when called with price 100 and quantity 20', () => {
+  it('should log the total as 120 when called with 100 and 20', () => {
     sendPaymentRequestToAPI(100, 20);
 
-    // Check that the console was called with the correct total
-    assert(
-      consoleSpy.calledOnceWith('The total is: 120'),
-      'Console log should be called once with "The total is: 120"'
-    );
+    // Verify console.log is called once with the correct string
+    sinon.assert.calledOnce(consoleSpy);
+    sinon.assert.calledWithExactly(consoleSpy, 'The total is: 120');
   });
 
-  it('should log "The total is: 20" when called with price 10 and quantity 10', () => {
+  it('should log the total as 20 when called with 10 and 10', () => {
     sendPaymentRequestToAPI(10, 10);
 
-    // Check that the console was called with the correct total
-    assert(
-      consoleSpy.calledOnceWith('The total is: 20'),
-      'Console log should be called once with "The total is: 20"'
-    );
+    // Verify console.log is called once with the correct string
+    sinon.assert.calledOnce(consoleSpy);
+    sinon.assert.calledWithExactly(consoleSpy, 'The total is: 20');
   });
 });
